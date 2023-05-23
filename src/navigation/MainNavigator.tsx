@@ -1,7 +1,7 @@
 import React from 'react';
-import { ScrollViewProps, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { StackScreenProps, createStackNavigator } from '@react-navigation/stack';
-import { DrawerContentScrollView, DrawerItemList, DrawerNavigationProp, DrawerScreenProps, createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerNavigationProp, DrawerScreenProps, createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreenDemo from '../screens/HomeScreenDemo';
 import SearchScreen from '../screens/SearchScreen';
 import ProfileScreen from '../screens/ProfileScreen';
@@ -11,6 +11,7 @@ import MyWishListScreen from '../screens/MyWishListScreen';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Product } from '../data/Product';
 import HomeScreen from '../screens/HomeScreen';
+import ShareScreen from '../screens/ShareScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import CustomDrawerContent from './CustomDrawerContent';
 
@@ -26,6 +27,7 @@ export type RootStackParamList = {
 
 export type ProfileScreenProps = DrawerScreenProps<RootDrawerParamList, "ProfileScreen">;
 export type MyWishListScreenProps = DrawerScreenProps<RootDrawerParamList, "MyWishListScreen">;
+export type ShareScreenProps = DrawerScreenProps<RootDrawerParamList, "ShareScreen">;
 
 export type HomeProps = StackScreenProps<RootStackParamList, "HomeScreen">
 export type DetailsProps = StackScreenProps<RootStackParamList, "DetailsScreen">
@@ -34,6 +36,7 @@ export type RootDrawerParamList = {
     HomeStack: undefined;
     ProfileScreen: { name: string };
     MyWishListScreen: undefined;
+    ShareScreen: undefined;
 };
 
 export type DrawerProps = DrawerScreenProps<RootDrawerParamList>;
@@ -53,7 +56,17 @@ function CustomHeader2(navigation: DrawerNavigationProp<RootDrawerParamList>) {
 
 function HomeStack(drawer: DrawerProps) {
     return (
-        <Stack.Navigator initialRouteName="HomeScreen" >
+        <Stack.Navigator initialRouteName="HomeScreen"
+        // screenOptions={{
+        //     headerStyle: {
+        //         backgroundColor: theme.colors.primary, // Set your desired background color here
+        //     },
+        //     headerTintColor: 'white', // Set the text color of the header buttons
+        //     headerTitleStyle: {
+        //         fontWeight: 'bold', // Set the font weight of the header title
+        //     },
+        // }}
+        >
             <Stack.Screen name="HomeScreenDemo" component={HomeScreenDemo}
                 options={{
                     headerShown: true,
@@ -117,13 +130,21 @@ const MainNavigator = () => {
                         headerLeft: () => (CustomHeader2(drawer.navigation))
                     }
                 )} />
+            <Drawer.Screen name="ShareScreen"
+                component={ShareScreen}
+                options={(drawer: DrawerProps) => (
+                    {
+                        headerShown: true,
+                        headerTitle: "ShareScreen",
+                        headerLeft: () => (CustomHeader2(drawer.navigation))
+                    }
+                )} />
         </Drawer.Navigator>
     )
 }
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: '#fff',
         padding: 10,
     },
     hamburger: {

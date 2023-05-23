@@ -4,6 +4,7 @@ import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { theme } from '../theme/color';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Divider from '../common/Divider';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
     const handleDrawerItemPress = (screen: string) => {
@@ -11,24 +12,31 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={{ fontSize: 30, color: theme.colors.primary, marginBottom: 30 }}>E-commerce Store</Text>
+        <ScrollView>
+            <View style={styles.container}>
+                <Text style={{ fontSize: 30, color: theme.colors.primary, marginBottom: 30 }}>E-commerce Store</Text>
 
-            <Text style={styles.textTitle}>My Account</Text>
-            <RowMenu title={'My Profile'} icon={'user'} onPress={() => handleDrawerItemPress('ProfileScreen')} />
-            <RowMenu title={'My Wish List'} icon={'heart'} onPress={() => handleDrawerItemPress('MyWishListScreen')} />
-            <RowMenu title={'My Cart'} icon={'shopping-cart'} onPress={() => handleDrawerItemPress('MyWishListScreen')} />
-            <RowMenu title={'My Orders'} icon={'cart-arrow-down'} onPress={() => handleDrawerItemPress('MyWishListScreen')} />
+                <Text style={styles.textTitle}>Home</Text>
+                <RowMenu title={'Home'} icon={'home'} onPress={() => handleDrawerItemPress('HomeStack')} />
 
-            <Divider />
-            <Text style={styles.textTitle}>Support</Text>
-            <RowMenu title={'Email'} icon={'envelope'} onPress={() => handleDrawerItemPress('ProfileScreen')} />
-            <RowMenu title={'Call'} icon={'phone'} onPress={() => handleDrawerItemPress('ProfileScreen')} />
+                <Divider />
+                <Text style={styles.textTitle}>My Account</Text>
+                <RowMenu title={'My Profile'} icon={'user'} onPress={() => handleDrawerItemPress('ProfileScreen')} />
+                <RowMenu title={'My Wish List'} icon={'heart'} onPress={() => handleDrawerItemPress('MyWishListScreen')} />
+                <RowMenu title={'My Cart'} icon={'shopping-cart'} onPress={() => handleDrawerItemPress('MyWishListScreen')} />
+                <RowMenu title={'My Orders'} icon={'cart-arrow-down'} onPress={() => handleDrawerItemPress('MyWishListScreen')} />
 
-            <Divider />
-            <RowMenu title={'Share'} icon={'share-alt'} onPress={() => handleDrawerItemPress('ProfileScreen')} />
+                <Divider />
+                <Text style={styles.textTitle}>Support</Text>
+                <RowMenu title={'Email'} icon={'envelope'} onPress={() => handleDrawerItemPress('HomeStack')} />
+                <RowMenu title={'Call'} icon={'phone'} onPress={() => handleDrawerItemPress('HomeStack')} />
 
-        </View>
+                <Divider />
+                <RowMenu title={'Share'} icon={'share-alt'} onPress={() => handleDrawerItemPress('ShareScreen')} />
+
+            </View>
+        </ScrollView>
+
     );
 };
 

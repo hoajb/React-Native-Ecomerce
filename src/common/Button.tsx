@@ -1,34 +1,34 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, TouchableHighlight, GestureResponderEvent } from 'react-native';
+import { StyleSheet, Text, TouchableHighlight, GestureResponderEvent, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { theme } from '../theme/color';
 
 export interface BaseProps {
-    onPress?: ((event: GestureResponderEvent) => void) | undefined;
+    text: string,
+    onPress?: (() => void) | undefined;
 }
 
-const Button = (props: BaseProps) => {
+const MyButton = ({ text, onPress }: BaseProps) => {
     return (
-        <TouchableHighlight
+        <TouchableOpacity
             style={styles.submit}
-            onPress={props.onPress}
-            underlayColor='#fff'>
-            <Text style={[styles.submitText]}>Submit</Text>
-        </TouchableHighlight>
+            onPress={onPress}>
+            <Text style={[styles.submitText]}>{text}</Text>
+        </TouchableOpacity>
     );
 }
 
-export default Button;
+export default MyButton;
 
 const styles = StyleSheet.create({
     submit: {
+        width: 100,
         marginRight: 40,
         marginLeft: 40,
         marginTop: 10,
-        paddingTop: 20,
-        paddingBottom: 20,
-        backgroundColor: '#68a0cf',
+        padding: 10,
+        backgroundColor: theme.colors.primary,
         borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#fff',
     },
     submitText: {
         color: '#fff',
