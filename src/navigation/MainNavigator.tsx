@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollViewProps, StyleSheet, TouchableOpacity } from 'react-native';
 import { StackScreenProps, createStackNavigator } from '@react-navigation/stack';
-import { DrawerNavigationProp, DrawerScreenProps, createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItemList, DrawerNavigationProp, DrawerScreenProps, createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreenDemo from '../screens/HomeScreenDemo';
 import SearchScreen from '../screens/SearchScreen';
 import ProfileScreen from '../screens/ProfileScreen';
@@ -12,6 +12,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Product } from '../data/Product';
 import HomeScreen from '../screens/HomeScreen';
 import DetailsScreen from '../screens/DetailsScreen';
+import CustomDrawerContent from './CustomDrawerContent';
 
 
 export type RootStackParamList = {
@@ -35,7 +36,7 @@ export type RootDrawerParamList = {
     MyWishListScreen: undefined;
 };
 
-type DrawerProps = DrawerScreenProps<RootDrawerParamList>;
+export type DrawerProps = DrawerScreenProps<RootDrawerParamList>;
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -85,10 +86,13 @@ function HomeStack(drawer: DrawerProps) {
     );
 }
 
+
 const MainNavigator = () => {
     return (
         <Drawer.Navigator
-            initialRouteName="HomeStack">
+            initialRouteName="HomeStack"
+            drawerContent={(props) => CustomDrawerContent(props)}
+        >
             <Drawer.Screen name="HomeStack"
                 component={HomeStack}
                 options={{
