@@ -1,113 +1,100 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native'
-import CircleCategory from "../components/CircleCategory";
-import ProductCard from "../components/ProductCard";
-import { RootStackParamList } from "../navigation/MainNavigator";
-import { StackScreenProps } from "@react-navigation/stack";
+import * as React from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import Divider from '../common/Divider';
+import GridFlatList from '../common/GridFlatList';
+import SearchBox from '../common/SearchBox';
+import ProductItemOri, { ProductItemOriProps } from '../components/ProductItemOri';
+import { APIListProduct } from '../constants/dummy';
+import { useState, useEffect } from 'react';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { HomeProps } from '../navigation/MainNavigator';
 
-type HomeScreenProps = StackScreenProps<RootStackParamList, "HomeScreen">;
+export default function HomeScreen({ navigation }: HomeProps) {
+    const listMap: ProductItemOriProps[] = React.useMemo(() => {
+        return APIListProduct.data.map((obj) => {
+            const item = obj.attributes
+            return {
+                name: item.name,
+                description: item.description,
+                uri: `https://picsum.photos/200/300?random=${Math.random()}`,
+                price: Math.floor(Number(item.price)), // return NaN
+                origin_price: Math.floor(+item.price + 50) // return 0
+            }
+        })
+    }, []);
 
-const HomeScreen = ({ navigation }: HomeScreenProps) => {
-
-    const goToProfile = () => {
-        // navigation.navigate('ProfileScreen', { name: "Jane" });
-    };
-
-    const goToSearch = () => {
-        navigation.navigate('SearchScreen');
-    };
-
-    const goToProductCatalogue = (id: number, step: number) => {
-        navigation.navigate('ProductCatalogueScreen', { id: id, step: step });
-    };
-
-    const goToProductCard = (id: number, step: number) => {
-        navigation.navigate('ProductCardScreen', { id: id, step: step });
-    };
+    const [list, setList] = useState(listMap);
+    const [isEmpty, setListEmpty] = useState(listMap.length == 0);
+    useEffect(() => {
+        setListEmpty(list.length == 0);
+    }, [list]);
 
     return (
         <View style={styles.container}>
-            <View style={styles.button}>
-                <View style={{ flex: 1 }}>
-                    <Button
-                        title="Go to Search Screen"
-                        onPress={goToSearch}
-                    />
-                </View>
-            </View>
+            <SearchBox onChangeText={(text: String) => {
+                if (text.length == 0) { setList(listMap) }
+                else {
+                    const lowCaseText = text.trim().toLocaleLowerCase()
+                    const listFiltered = listMap.filter((item) => item.name.toLocaleLowerCase().includes(lowCaseText))
+                    setList(listFiltered);
+                }
+            }} />
+            <Divider />
+            {isEmpty && <View style={styles.container_empty}>
+                <Text >No data found</Text>
+            </View>}
+            {!isEmpty && <GridFlatList
+                data={list}
+                renderItem={({ item, index }) =>
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate('DetailsScreen', {
+                                product: {
+                                    id: item.id,
+                                    name: index + '. ' + item.name,
+                                    price: item.price,
+                                    origin_price: item.origin_price,
+                                    uri: item.uri,
+                                    description: item.description,
+                                }
+                            })
+                        }}
+                    >
+                        <ProductItemOri
+                            id={item.id}
+                            name={index + '. ' + item.name}
+                            price={item.price}
+                            origin_price={item.origin_price}
+                            uri={item.uri}
+                            description={item.description}
+                        />
+                    </TouchableOpacity>
+                }
+                keyExtractor={renderItem => renderItem.name}
+                numColumns={2}
+            />}
 
-            <View style={styles.menu_container}>
-                <CircleCategory handlePress={(id: number) => {
-                    goToProductCatalogue(id, 0);
-                }} id={0} />
-
-                <CircleCategory handlePress={(id: number) => {
-                    goToProductCatalogue(id, 0);
-                }} id={10} />
-
-
-                <CircleCategory handlePress={(id: number) => {
-                    goToProductCatalogue(id, 0);
-                }} id={20} />
-
-            </View>
-
-            <Text style={styles.title}> Product Catalogue</Text>
-
-            <View style={styles.menu_container}>
-                <ProductCard handlePress={(id: number) => {
-                    goToProductCard(id, 0);
-                }} id={0} />
-
-                <ProductCard handlePress={(id: number) => {
-                    goToProductCard(id, 0);
-                }} id={10} />
-
-
-                <ProductCard handlePress={(id: number) => {
-                    goToProductCard(id, 0);
-                }} id={20} />
-
-            </View>
-            <Text style={styles.title}> Product Catalogue</Text>
-
-
-
-            <Button title="Go to Profile Screen" onPress={goToProfile} />
         </View>
     );
 }
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+        backgroundColor: 'white',
     },
-    title: {
-        fontSize: 18,
-        color: 'blue',
-        marginBottom: 20,
+    container_empty: {
+        justifyContent: "center",
+        alignItems: "center",
+        flex: 1,
+        width: "100%",
+        backgroundColor: "white",
     },
-    button: {
-        flexDirection: "row",
-        backgroundColor: 'transparent',
-        borderColor: 'black',
-        borderWidth: 1,
-        borderRadius: 5,
-        padding: 0,
-        margin: 10
-    },
-
-    menu_container: {
-        flexDirection: "row",
-        backgroundColor: 'transparent',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 0,
-        margin: 10
+    text: {
+        fontSize: 16,
+        color: Colors.black,
+        fontWeight: "bold",
+        textAlign: "center",
     },
 
 });
-
-export default HomeScreen;
