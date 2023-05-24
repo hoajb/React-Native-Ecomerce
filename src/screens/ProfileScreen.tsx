@@ -1,12 +1,15 @@
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useReducer } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
-import { ProfileScreenProps } from '../navigation/MainNavigator';
+import React, { useReducer, useState } from 'react';
+import { View, Text, StyleSheet, TextInput, Platform, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import ModalController from '../common/dialog/ModalController';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { launchImageLibrary, launchCamera, CameraOptions, ImageLibraryOptions } from 'react-native-image-picker'
+
+import { ProfileScreenProps } from '../navigation/MainNavigator';
+import ModalController from '../common/dialog/ModalController';
 import { theme } from '../theme/color';
 import MyButton from '../common/Button';
+import { Image } from 'react-native';
 
 interface State {
     name: string;
@@ -14,6 +17,7 @@ interface State {
     city: string;
     street: string;
     building: string;
+    isButtonUpdateDisabled: boolean;
 }
 
 type Action =
@@ -30,26 +34,64 @@ const initialState: State = {
     city: '',
     street: '',
     building: '',
+    isButtonUpdateDisabled: true
 };
 
-const reducer = (state: State, action: Action) => {
+function reducer(state: State, action: Action): State {
+    let isButtonUpdateDisabled: boolean
     switch (action.type) {
         case 'SET_NAME':
-            return { ...state, name: action.payload };
+            isButtonUpdateDisabled = action.payload.trim() === '' || state.mobile.trim() === ''
+                || state.city.trim() === '' || state.street.trim() === '' || state.building.trim() === ''
+            return { ...state, isButtonUpdateDisabled, name: action.payload };
         case 'SET_MOBILE_NUMBER':
-            return { ...state, email: action.payload };
+            isButtonUpdateDisabled = state.name.trim() === '' || action.payload.trim() === ''
+                || state.city.trim() === '' || state.street.trim() === '' || state.building.trim() === ''
+            return { ...state, isButtonUpdateDisabled, mobile: action.payload };
         case 'SET_CITY':
-            return { ...state, password: action.payload };
+            isButtonUpdateDisabled = state.name.trim() === '' || state.mobile.trim() === ''
+                || action.payload.trim() === '' || state.street.trim() === '' || state.building.trim() === ''
+            return { ...state, isButtonUpdateDisabled, city: action.payload };
         case 'SET_STREET':
-            return { ...state, password: action.payload };
+            isButtonUpdateDisabled = state.name.trim() === '' || state.mobile.trim() === ''
+                || state.city.trim() === '' || action.payload.trim() === '' || state.building.trim() === ''
+            return { ...state, isButtonUpdateDisabled, street: action.payload };
         case 'SET_BUILDING':
-            return { ...state, password: action.payload };
+            isButtonUpdateDisabled = state.name.trim() === '' || state.mobile.trim() === ''
+                || state.city.trim() === '' || state.street.trim() === '' || action.payload.trim() === ''
+            return { ...state, isButtonUpdateDisabled, building: action.payload };
         case 'RESET':
             return initialState;
         default:
             return state;
+
     }
+
 };
+
+const actions = {
+    camera: {
+        title: 'Take Image',
+        type: 'capture',
+        options: {
+            saveToPhotos: true,
+            mediaType: 'photo',
+            includeBase64: false,
+            includeExtra: true,
+            cameraType: 'front'
+        } as CameraOptions,
+    },
+    gallery: {
+        title: 'Select Image',
+        type: 'library',
+        options: {
+            selectionLimit: 1,
+            mediaType: 'photo',
+            includeBase64: false,
+            includeExtra: true,
+        } as ImageLibraryOptions,
+    },
+}
 
 const ProfileScreen = ({ navigation, route }: ProfileScreenProps) => {
     const { name: welcomeName } = route.params
@@ -58,29 +100,15 @@ const ProfileScreen = ({ navigation, route }: ProfileScreenProps) => {
     const handleTextChange = (inputText: string, field: Action['type']): void => {
         dispatch({ type: field, payload: inputText });
     };
+
+    // Avatar
+    const [response, setResponse] = React.useState<any>(null);
+
     return (
         <View style={styles.container}>
 
-            {/* <TouchableOpacity onPress={() => {
-                ModalController.showModal({
-                    message: "Welcome to the Profile Screen",
-                    positiveButton: 'Logout',
-                    positiveButtonPressed: (ref) => {
-                        console.log(ref)
-                        console.log('positiveButtonPressed')
-                    },
-                    negativeButton: 'No',
-                    negativeButtonPressed: (ref) => {
-                        console.log(ref)
-                        console.log('negativeButtonPressed')
-                    },
-                    icon: 'check-circle'
-                })
-            }}>
-                <Text style={styles.title}>Profile Screen</Text>
-            </TouchableOpacity> */}
-
             <Text style={[styles.text, { margin: 20 }]}>Welcome {welcomeName}</Text>
+            {/* <DemoResponse>{response}</DemoResponse> //for debug*/}
 
             <TextInput
                 style={styles.textInput}
@@ -90,9 +118,33 @@ const ProfileScreen = ({ navigation, route }: ProfileScreenProps) => {
                 placeholder="Full Name"
             />
 
-            <TouchableOpacity style={styles.avatarProfile}
-                onPress={() => { }}>
-                <FontAwesome name={'camera'} size={40} color={'white'} />
+            <TouchableOpacity style={styles.avatarBg}
+                onPress={() => {
+                    ModalController.showImageCameraGalleryModal(
+                        {
+                            message: 'Change Avatar?',
+                            onCamera: () => {
+                                launchCamera(actions.camera.options, setResponse);
+                            },
+                            onGallery: () => {
+                                launchImageLibrary(actions.gallery.options, setResponse)
+                            }
+                        }
+                    )
+                }}>
+                {!response?.assets &&
+                    <FontAwesome name={'camera'} size={40} color={'white'} />}
+                {response?.assets &&
+                    response?.assets.map(({ uri }: { uri: string }) => (
+                        <View key={uri} style={styles.avatarProfile}>
+                            <Image
+                                resizeMode="cover"
+                                resizeMethod="auto"
+                                style={styles.imageAvatar}
+                                source={{ uri: uri }}
+                            />
+                        </View>
+                    ))}
             </TouchableOpacity>
 
             <TextInput
@@ -126,11 +178,14 @@ const ProfileScreen = ({ navigation, route }: ProfileScreenProps) => {
                 placeholder="Flat no, Building name"
             />
 
-            <MyButton text={'Update'} onPress={() => { }} />
+            <MyButton disabled={state.isButtonUpdateDisabled} text={'Update'} onPress={() => {
+
+
+            }} />
 
             <MyButton text={'Logout'} onPress={() => {
                 ModalController.showLogoutModal()
-             }} />
+            }} />
 
         </View>
     );
@@ -161,7 +216,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 10
     },
-    avatarProfile: {
+    avatarBg: {
         justifyContent: 'center',
         alignItems: 'center',
         width: 100,
@@ -170,8 +225,23 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 50,
         margin: 10,
-    }
-
+    },
+    avatarProfile: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+    },
+    buttonContainer: {
+        flex: 1,
+        marginVertical: 8,
+    },
+    imageAvatar: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+    },
 });
 
 export default ProfileScreen;

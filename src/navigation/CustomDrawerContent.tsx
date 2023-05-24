@@ -33,6 +33,7 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation
 
                 <Divider />
                 <RowMenu title={'Share'} icon={'share-alt'} onPress={() => handleDrawerItemPress('ShareScreen')} />
+                <RowMenu title={'Demo Camera Gallery'} icon={'plus'} onPress={() => handleDrawerItemPress('DemoSelectionScreen')} />
 
             </View>
         </ScrollView>

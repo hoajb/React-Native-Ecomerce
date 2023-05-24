@@ -5,13 +5,16 @@ import { theme } from '../theme/color';
 
 export interface BaseProps {
     text: string,
+    disabled?: boolean,
     onPress?: (() => void) | undefined;
 }
 
-const MyButton = ({ text, onPress }: BaseProps) => {
+const MyButton = ({ text, onPress, disabled: disabled = false }: BaseProps) => {
     return (
         <TouchableOpacity
-            style={styles.submit}
+            disabled={disabled}
+            style={[styles.submit,
+            { backgroundColor: disabled ? theme.colors.disabled : theme.colors.primary, }]}
             onPress={onPress}>
             <Text style={[styles.submitText]}>{text}</Text>
         </TouchableOpacity>
@@ -27,7 +30,6 @@ const styles = StyleSheet.create({
         marginLeft: 40,
         marginTop: 10,
         padding: 10,
-        backgroundColor: theme.colors.primary,
         borderRadius: 10,
     },
     submitText: {

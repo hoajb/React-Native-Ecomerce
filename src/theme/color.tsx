@@ -20,6 +20,7 @@ export const theme = {
     danger: palette.red,
     failure: palette.red,
     info: palette.gray_info,
+    disabled: palette.bg,
   },
   spacing: {
     s: 8,

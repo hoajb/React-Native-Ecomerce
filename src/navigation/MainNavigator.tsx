@@ -14,6 +14,7 @@ import HomeScreen from '../screens/HomeScreen';
 import ShareScreen from '../screens/ShareScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import CustomDrawerContent from './CustomDrawerContent';
+import DemoSelectionScreen from '../screens/DemoSelectionScreen';
 
 
 export type RootStackParamList = {
@@ -37,6 +38,7 @@ export type RootDrawerParamList = {
     ProfileScreen: { name: string };
     MyWishListScreen: undefined;
     ShareScreen: undefined;
+    DemoSelectionScreen: undefined;
 };
 
 export type DrawerProps = DrawerScreenProps<RootDrawerParamList>;
@@ -103,7 +105,7 @@ function HomeStack(drawer: DrawerProps) {
 const MainNavigator = () => {
     return (
         <Drawer.Navigator
-            initialRouteName="HomeStack"
+            initialRouteName="ProfileScreen"
             drawerContent={(props) => CustomDrawerContent(props)}
         >
             <Drawer.Screen name="HomeStack"
@@ -120,7 +122,7 @@ const MainNavigator = () => {
                         headerLeft: () => (CustomHeader2(drawer.navigation))
                     }
                 )}
-                initialParams={{ name: "Jane init" }} />
+                initialParams={{ name: "Hoa Nguyen" }} />
             <Drawer.Screen name="MyWishListScreen"
                 component={MyWishListScreen}
                 options={(drawer: DrawerProps) => (
@@ -132,6 +134,15 @@ const MainNavigator = () => {
                 )} />
             <Drawer.Screen name="ShareScreen"
                 component={ShareScreen}
+                options={(drawer: DrawerProps) => (
+                    {
+                        headerShown: true,
+                        headerTitle: "ShareScreen",
+                        headerLeft: () => (CustomHeader2(drawer.navigation))
+                    }
+                )} />
+            <Drawer.Screen name="DemoSelectionScreen"
+                component={DemoSelectionScreen}
                 options={(drawer: DrawerProps) => (
                     {
                         headerShown: true,

@@ -22,6 +22,27 @@ export default class ModalController {
         });
     };
 
+    static showImageCameraGalleryModal = (
+        { message,
+            onCamera,
+            onGallery
+        }: {
+            message: string,
+            onCamera: () => void,
+            onGallery: () => void,
+        }
+    ) => {
+        this.modalRef.current?.show({
+            title: 'E-Commerce App',
+            message: message,
+            positiveButton: 'Select Camera',
+            negativeButton: 'Select Gallery',
+            icon: 'check-circle',
+            positiveButtonPressed: onCamera,
+            negativeButtonPressed: onGallery,
+        });
+    };
+
     static showModal = (props: CustomModalProps) => {
         this.modalRef.current?.show(props);
     };
