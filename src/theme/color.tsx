@@ -2,6 +2,7 @@ const palette = {
   purple: '#6200ee',
   green: '#03dac6',
   red: '#b00020',
+  orange: '#dd6b54',
   black: '#0B0B0B',
   bg: '#F0F2F3',
   white: '#ffffff',
@@ -13,7 +14,7 @@ export const theme = {
     background: palette.bg,
     foreground: palette.black,
     primary: palette.purple,
-    secondary: palette.green,
+    secondary: palette.orange,
 
     success: palette.green,
     danger: palette.red,
