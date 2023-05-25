@@ -105,7 +105,7 @@ function HomeStack(drawer: DrawerProps) {
 const MainNavigator = () => {
     return (
         <Drawer.Navigator
-            initialRouteName="ProfileScreen"
+            initialRouteName="HomeStack"
             drawerContent={(props) => CustomDrawerContent(props)}
         >
             <Drawer.Screen name="HomeStack"

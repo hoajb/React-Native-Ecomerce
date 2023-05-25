@@ -34,6 +34,7 @@ export default function HomeScreen({ navigation }: HomeProps) {
             <SearchBox onChangeText={(text: String) => {
                 if (text.length == 0) { setList(listMap) }
                 else {
+                    console.log(`SearchBox - ${text}`)
                     const lowCaseText = text.trim().toLocaleLowerCase()
                     const listFiltered = listMap.filter((item) => item.name.toLocaleLowerCase().includes(lowCaseText))
                     setList(listFiltered);
