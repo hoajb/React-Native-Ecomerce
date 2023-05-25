@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Divider from '../common/Divider';
 import GridFlatList from '../common/GridFlatList';
 import SearchBox from '../common/SearchBox';

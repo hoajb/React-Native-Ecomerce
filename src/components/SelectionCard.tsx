@@ -1,7 +1,6 @@
 
 import * as React from 'react';
-import { Text, View, StyleSheet, Dimensions, FlatList } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, View, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
 interface SelectionCardProps {
     stringList: string[]

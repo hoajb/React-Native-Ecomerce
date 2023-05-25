@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, TouchableHighlight, GestureResponderEvent, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { theme } from '../theme/color';
 
 export interface BaseProps {
@@ -9,10 +8,10 @@ export interface BaseProps {
     onPress?: (() => void) | undefined;
 }
 
-const MyButton = ({ text, onPress, disabled: disabled = false }: BaseProps) => {
+const MyButton = ({ text, onPress, disabled }: BaseProps) => {
     return (
         <TouchableOpacity
-            disabled={disabled}
+            disabled={disabled ? disabled : false}
             style={[styles.submit,
             { backgroundColor: disabled ? theme.colors.disabled : theme.colors.primary, }]}
             onPress={onPress}>

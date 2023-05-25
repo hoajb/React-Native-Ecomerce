@@ -146,7 +146,7 @@ const MainNavigator = () => {
                 options={(drawer: DrawerProps) => (
                     {
                         headerShown: true,
-                        headerTitle: "ShareScreen",
+                        headerTitle: "DemoSelectionScreen",
                         headerLeft: () => (CustomHeader2(drawer.navigation))
                     }
                 )} />

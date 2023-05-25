@@ -1,15 +1,14 @@
-import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useReducer, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Platform, ScrollView } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { launchImageLibrary, launchCamera, CameraOptions, ImageLibraryOptions } from 'react-native-image-picker'
+import { launchImageLibrary, launchCamera, CameraOptions, ImageLibraryOptions, ImagePickerResponse } from 'react-native-image-picker'
 
 import { ProfileScreenProps } from '../navigation/MainNavigator';
 import ModalController from '../common/dialog/ModalController';
 import { theme } from '../theme/color';
 import MyButton from '../common/Button';
 import { Image } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 interface State {
     name: string;
@@ -97,12 +96,46 @@ const ProfileScreen = ({ navigation, route }: ProfileScreenProps) => {
     const { name: welcomeName } = route.params
     const [state, dispatch] = useReducer(reducer, initialState)
 
+    const [assetAvatar, setAssetAvatar] = useState('')
+
     const handleTextChange = (inputText: string, field: Action['type']): void => {
         dispatch({ type: field, payload: inputText });
     };
 
     // Avatar
-    const [response, setResponse] = React.useState<any>(null);
+    const [response, setResponse] = React.useState<ImagePickerResponse>();
+    let STORAGE_KEY = '@user_input';
+    React.useEffect(() => {
+        (async () => {
+            if (response?.assets) {
+                try {
+                    const selectedAvatar = response?.assets[0].uri
+                    console.log(selectedAvatar)
+                    if (selectedAvatar) {
+                        await AsyncStorage.setItem(STORAGE_KEY, selectedAvatar)
+                        setAssetAvatar(selectedAvatar)
+                        console.log('Data successfully saved')
+                    }
+                } catch (e) {
+                    console.log('Failed to save the data to the storage')
+                }
+            }
+        })()
+
+    }, [response])
+
+    React.useEffect(() => {
+        (async () => {
+            try {
+                const lastAvatar = await AsyncStorage.getItem(STORAGE_KEY)
+                if (lastAvatar)
+                    setAssetAvatar(lastAvatar)
+                console.log('Data successfully restored')
+            } catch (e) {
+                console.log('Failed to restore the data from the storage')
+            }
+        })()
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -122,29 +155,30 @@ const ProfileScreen = ({ navigation, route }: ProfileScreenProps) => {
                 onPress={() => {
                     ModalController.showImageCameraGalleryModal(
                         {
-                            message: 'Change Avatar?',
+                            message: 'Change Avatar2?',
                             onCamera: () => {
+                                console.log('onCamera')
                                 launchCamera(actions.camera.options, setResponse);
                             },
                             onGallery: () => {
+                                console.log('onGallery')
                                 launchImageLibrary(actions.gallery.options, setResponse)
                             }
                         }
                     )
                 }}>
-                {!response?.assets &&
+                {assetAvatar == '' &&
                     <FontAwesome name={'camera'} size={40} color={'white'} />}
-                {response?.assets &&
-                    response?.assets.map(({ uri }: { uri: string }) => (
-                        <View key={uri} style={styles.avatarProfile}>
-                            <Image
-                                resizeMode="cover"
-                                resizeMethod="auto"
-                                style={styles.imageAvatar}
-                                source={{ uri: uri }}
-                            />
-                        </View>
-                    ))}
+                {assetAvatar !== '' &&
+                    <View key={assetAvatar} style={styles.avatarProfile}>
+                        <Image
+                            resizeMode="cover"
+                            resizeMethod="auto"
+                            style={styles.imageAvatar}
+                            source={{ uri: assetAvatar }}
+                        />
+                    </View>
+                }
             </TouchableOpacity>
 
             <TextInput

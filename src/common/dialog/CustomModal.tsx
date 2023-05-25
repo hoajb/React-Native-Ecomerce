@@ -1,4 +1,4 @@
-import { Alert, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React, {
     forwardRef,
     useImperativeHandle,
@@ -7,9 +7,9 @@ import React, {
     useState,
 } from 'react';
 import ModalController, { CustomModalRef } from './ModalController';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { theme } from '../../theme/color';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import MyButton from '../Button';
 
 export interface CustomModalProps {
     message?: string,
