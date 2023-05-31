@@ -1,7 +1,7 @@
 import React from 'react';
-import { StackScreenProps, createStackNavigator } from '@react-navigation/Stack';
+import { StackScreenProps, createStackNavigator } from '@react-navigation/stack';
 import { DrawerProps, CustomHeader2 } from './MainNavigator';
-import MyCartScreen from '../screens/MyCartScreen';
+import { MyCartScreen, MapScreen } from '../screens';
 
 export type RootCartStackParamList = {
     MyCartScreen: undefined;
@@ -20,19 +20,12 @@ export function CartCartStack(drawer: DrawerProps) {
             <CartStack.Screen name="MyCartScreen" component={MyCartScreen}
                 options={{
                     headerShown: true,
-                    headerTitle: "MyCartScreen",
+                    headerTitle: "MyCart",
                     headerLeft: () => CustomHeader2(drawer.navigation),
                 }} />
 
             <CartStack.Screen name="MapScreen" component={MapScreen}
-                options={{
-                    headerShown: true,
-                    headerTitle: "MapScreen",
-                    headerLeft: () => CustomHeader2(drawer.navigation),
-                }} />
-
-
-
+                options={{ headerTitle: "Maps", }} />
 
         </CartStack.Navigator>
     );

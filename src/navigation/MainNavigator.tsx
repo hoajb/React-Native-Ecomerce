@@ -12,6 +12,7 @@ import {
     ShareScreen,
 } from '../screens';
 import { HomeStack } from './HomeStack';
+import { CartCartStack } from './CartStack';
 
 
 export type ProfileScreenProps = DrawerScreenProps<RootDrawerParamList, "ProfileScreen">;
@@ -24,7 +25,7 @@ export type RootDrawerParamList = {
     MyWishListScreen: undefined;
     ShareScreen: undefined;
     DemoSelectionScreen: undefined;
-    MyCartScreen: undefined;
+    CartCartStack: undefined;
 };
 
 export type DrawerProps = DrawerScreenProps<RootDrawerParamList>;
@@ -89,15 +90,12 @@ const MainNavigator = () => {
                     }
                 )} />
 
-            <Drawer.Screen name="MyCartScreen"
-                component={MyCartScreen}
-                options={(drawer: DrawerProps) => (
-                    {
-                        headerShown: true,
-                        headerTitle: "MyCart",
-                        headerLeft: () => (CustomHeader2(drawer.navigation))
-                    }
-                )} />
+            <Drawer.Screen name="CartCartStack"
+                component={CartCartStack}
+                options={{
+                    headerShown: false,
+                    headerTitle: "Cart",
+                }} />
         </Drawer.Navigator>
     )
 }

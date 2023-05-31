@@ -1,11 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import MyButton from '../common/Button';
+import { MyCartScreenProps } from '../navigation/CartStack';
 
-const MyCartScreen = () => {
+const MyCartScreen = ({ navigation }: MyCartScreenProps) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>MyCartScreen</Text>
             <Text style={styles.text}>Here's where you can view your MyCartScreen information.</Text>
+            <MyButton text={'View My Map'} onPress={() => {
+                navigation.navigate('MapScreen')
+            }} />
         </View>
     );
 };
@@ -27,4 +32,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MyCartScreen;
+export { MyCartScreen };
