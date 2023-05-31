@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
 type Props = {
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default ProductCatalogueScreen;
+export { ProductCatalogueScreen };

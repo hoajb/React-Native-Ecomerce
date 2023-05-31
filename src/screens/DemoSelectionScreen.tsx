@@ -125,7 +125,7 @@ if (Platform.OS === 'ios') {
   });
 }
 
-export default DemoSelectionScreen;
+export { DemoSelectionScreen };
 
 const styles = StyleSheet.create({
   container: {

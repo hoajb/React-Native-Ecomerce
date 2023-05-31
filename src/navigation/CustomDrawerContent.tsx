@@ -23,7 +23,7 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation
                 <Text style={styles.textTitle}>My Account</Text>
                 <RowMenu title={'My Profile'} icon={'user'} onPress={() => handleDrawerItemPress('ProfileScreen')} />
                 <RowMenu title={'My Wish List'} icon={'heart'} onPress={() => handleDrawerItemPress('MyWishListScreen')} />
-                <RowMenu title={'My Cart'} icon={'shopping-cart'} onPress={() => handleDrawerItemPress('MyWishListScreen')} />
+                <RowMenu title={'My Cart'} icon={'shopping-cart'} onPress={() => handleDrawerItemPress('MyCartScreen')} />
                 <RowMenu title={'My Orders'} icon={'cart-arrow-down'} onPress={() => handleDrawerItemPress('MyWishListScreen')} />
 
                 <Divider />

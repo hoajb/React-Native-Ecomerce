@@ -47,7 +47,7 @@ const SearchBox = (props: SearchBoxProps) => {
     const saveData = async () => {
         try {
             await AsyncStorage.setItem('listData', JSON.stringify(listData));
-            console.log('Data saved successfully');
+            // console.log('Data saved successfully');
         } catch (error) {
             console.log('Error saving data:', error);
         }
@@ -68,7 +68,7 @@ const SearchBox = (props: SearchBoxProps) => {
     };
     function onSelectItem(item: Item): void {
         handleChangeText(item.name)
-        console.log(`onSelectItem - ${item.name}`)
+        // console.log(`onSelectItem - ${item.name}`)
         props.onChangeText(item.name)
     }
 

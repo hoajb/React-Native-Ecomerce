@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const MyWishListScreen = () => {
+const MyCartScreen = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>MyWishListScreen</Text>
-            <Text style={styles.text}>Here's where you can view your MyWishListScreen information.</Text>
+            <Text style={styles.title}>MyCartScreen</Text>
+            <Text style={styles.text}>Here's where you can view your MyCartScreen information.</Text>
         </View>
     );
 };
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export { MyWishListScreen };
+export default MyCartScreen;

@@ -278,4 +278,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ProfileScreen;
+export { ProfileScreen };

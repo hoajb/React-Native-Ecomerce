@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { DetailsProps } from '../navigation/MainNavigator';
+import { DetailsProps } from '../navigation/HomeStack';
 import Swiper from 'react-native-swiper';
 import { Dimensions } from 'react-native';
 import { ProductTitleCard } from '../components/ProductItemOri';
@@ -97,4 +97,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default DetailsScreen
+export { DetailsScreen }

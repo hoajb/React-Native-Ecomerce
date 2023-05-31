@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native'
 import CircleCategory from "../components/CircleCategory";
 import ProductCard from "../components/ProductCard";
-import { RootStackParamList } from "../navigation/MainNavigator";
+import { RootStackParamList } from "../navigation/HomeStack";
 import { StackScreenProps } from "@react-navigation/stack";
 
 type HomeScreenProps = StackScreenProps<RootStackParamList, "HomeScreenDemo">;
@@ -110,4 +110,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default HomeScreenDemo;
+export { HomeScreenDemo };

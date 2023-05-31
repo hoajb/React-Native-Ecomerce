@@ -7,9 +7,9 @@ import ProductItemOri, { ProductItemOriProps } from '../components/ProductItemOr
 import { APIListProduct } from '../constants/dummy';
 import { useState, useEffect } from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { HomeProps } from '../navigation/MainNavigator';
+import { HomeProps } from '../navigation/HomeStack';
 
-export default function HomeScreen({ navigation }: HomeProps) {
+export function HomeScreen({ navigation }: HomeProps) {
     const listMap: ProductItemOriProps[] = React.useMemo(() => {
         return APIListProduct.data.map((obj) => {
             const item = obj.attributes
@@ -34,7 +34,7 @@ export default function HomeScreen({ navigation }: HomeProps) {
             <SearchBox onChangeText={(text: String) => {
                 if (text.length == 0) { setList(listMap) }
                 else {
-                    console.log(`SearchBox - ${text}`)
+                    // console.log(`SearchBox - ${text}`)
                     const lowCaseText = text.trim().toLocaleLowerCase()
                     const listFiltered = listMap.filter((item) => item.name.toLocaleLowerCase().includes(lowCaseText))
                     setList(listFiltered);

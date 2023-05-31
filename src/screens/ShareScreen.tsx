@@ -5,8 +5,6 @@ import MyButton from '../common/Button';
 import Share from 'react-native-share';
 import { theme } from '../theme/color'
 
-
-
 const ShareScreen = (props: ShareScreenProps) => {
     const [result, setResult] = React.useState<string>('');
 
@@ -55,7 +53,7 @@ const ShareScreen = (props: ShareScreenProps) => {
     );
 };
 
-export default ShareScreen;
+export { ShareScreen };
 
 const styles = StyleSheet.create({
     container: {
