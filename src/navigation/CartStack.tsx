@@ -11,22 +11,22 @@ export type RootCartStackParamList = {
 export type MyCartScreenProps = StackScreenProps<RootCartStackParamList, "MyCartScreen">
 export type MapScreenProps = StackScreenProps<RootCartStackParamList, "MapScreen">
 
-export const CartStack = createStackNavigator<RootCartStackParamList>();
+const Stack = createStackNavigator<RootCartStackParamList>();
 
-export function CartCartStack(drawer: DrawerProps) {
+export function CartStack(drawer: DrawerProps) {
     return (
-        <CartStack.Navigator initialRouteName="MyCartScreen"
+        <Stack.Navigator initialRouteName="MyCartScreen"
         >
-            <CartStack.Screen name="MyCartScreen" component={MyCartScreen}
+            <Stack.Screen name="MyCartScreen" component={MyCartScreen}
                 options={{
                     headerShown: true,
                     headerTitle: "MyCart",
                     headerLeft: () => CustomHeader2(drawer.navigation),
                 }} />
 
-            <CartStack.Screen name="MapScreen" component={MapScreen}
+            <Stack.Screen name="MapScreen" component={MapScreen}
                 options={{ headerTitle: "Maps", }} />
 
-        </CartStack.Navigator>
+        </Stack.Navigator>
     );
 }

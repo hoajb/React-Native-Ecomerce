@@ -8,7 +8,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [GMSServices provideAPIKey:@"AIzaSyC_uxUGJqb2V6ud4AVH2b7xl4wQmxxtyTA"]; // add this line using the api key obtained from Google Console
+  + [GMSServices provideAPIKey:@"AIzaSyC_uxUGJqb2V6ud4AVH2b7xl4wQmxxtyTA"]; // add this line using the api key obtained from Google Console
 
   self.moduleName = @"RNEcomerceStore";
   // You can add your custom initial props in the dictionary below.

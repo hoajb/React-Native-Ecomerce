@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { DrawerNavigationProp, DrawerScreenProps, createDrawerNavigator } from '@react-navigation/drawer';
-import MyCartScreen from '../screens/MyCartScreen';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import CustomDrawerContent from './CustomDrawerContent';
@@ -12,7 +11,7 @@ import {
     ShareScreen,
 } from '../screens';
 import { HomeStack } from './HomeStack';
-import { CartCartStack } from './CartStack';
+import { CartStack } from './CartStack';
 
 
 export type ProfileScreenProps = DrawerScreenProps<RootDrawerParamList, "ProfileScreen">;
@@ -25,7 +24,7 @@ export type RootDrawerParamList = {
     MyWishListScreen: undefined;
     ShareScreen: undefined;
     DemoSelectionScreen: undefined;
-    CartCartStack: undefined;
+    CartStack: undefined;
 };
 
 export type DrawerProps = DrawerScreenProps<RootDrawerParamList>;
@@ -44,7 +43,7 @@ export function CustomHeader2(navigation: DrawerNavigationProp<RootDrawerParamLi
 const MainNavigator = () => {
     return (
         <Drawer.Navigator
-            initialRouteName="HomeStack"
+            initialRouteName="CartStack"
             drawerContent={(props) => CustomDrawerContent(props)}
         >
             <Drawer.Screen name="HomeStack"
@@ -90,8 +89,8 @@ const MainNavigator = () => {
                     }
                 )} />
 
-            <Drawer.Screen name="CartCartStack"
-                component={CartCartStack}
+            <Drawer.Screen name="CartStack"
+                component={CartStack}
                 options={{
                     headerShown: false,
                     headerTitle: "Cart",
