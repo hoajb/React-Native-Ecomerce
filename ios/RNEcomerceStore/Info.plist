@@ -73,7 +73,12 @@
 		<key>NSCameraUsageDescription</key>
 		<string>$(PRODUCT_NAME) camera description.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>$(PRODUCT_NAME)photos description.</string>
-		
+		<string>$(PRODUCT_NAME)location description.</string>
+
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>$(PRODUCT_NAME)location description.</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>$(PRODUCT_NAME)location description.</string>
+
 	</dict>
 </plist>
