@@ -19,6 +19,9 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation
                 <Text style={styles.textTitle}>Home</Text>
                 <RowMenu title={'Home'} icon={'home'} onPress={() => handleDrawerItemPress('HomeStack')} />
 
+                <Text style={styles.textTitle}>Auth</Text>
+                <RowMenu title={'Auth'} icon={'arrow'} onPress={() => handleDrawerItemPress('AuthStack')} />
+
                 <Divider />
                 <Text style={styles.textTitle}>My Account</Text>
                 <RowMenu title={'My Profile'} icon={'user'} onPress={() => handleDrawerItemPress('ProfileScreen')} />

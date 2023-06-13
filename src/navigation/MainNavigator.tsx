@@ -12,6 +12,7 @@ import {
 } from '../screens';
 import { HomeStack } from './HomeStack';
 import { CartStack } from './CartStack';
+import { AuthStack } from './AuthStack';
 
 
 export type ProfileScreenProps = DrawerScreenProps<RootDrawerParamList, "ProfileScreen">;
@@ -20,6 +21,7 @@ export type ShareScreenProps = DrawerScreenProps<RootDrawerParamList, "ShareScre
 
 export type RootDrawerParamList = {
     HomeStack: undefined;
+    AuthStack: undefined;
     ProfileScreen: { name: string };
     MyWishListScreen: undefined;
     ShareScreen: undefined;
@@ -43,7 +45,7 @@ export function CustomHeader2(navigation: DrawerNavigationProp<RootDrawerParamLi
 const MainNavigator = () => {
     return (
         <Drawer.Navigator
-            initialRouteName="CartStack"
+            initialRouteName="AuthStack"
             drawerContent={(props) => CustomDrawerContent(props)}
         >
             <Drawer.Screen name="HomeStack"
@@ -51,6 +53,13 @@ const MainNavigator = () => {
                 options={{
                     headerShown: false,
                     headerTitle: "Home",
+                }} />
+
+            <Drawer.Screen name="AuthStack"
+                component={AuthStack}
+                options={{
+                    headerShown: false,
+                    headerTitle: "Auth",
                 }} />
             <Drawer.Screen name="ProfileScreen" component={ProfileScreen}
                 options={(drawer: DrawerProps) => (
